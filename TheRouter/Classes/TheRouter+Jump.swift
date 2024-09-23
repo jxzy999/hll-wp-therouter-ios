@@ -98,14 +98,15 @@ extension TheRouter {
     
     public class func jump(jumpType: LAJumpType, vc: UIViewController, queries: [String: Any]) {
         DispatchQueue.main.async {
+            let needAnimate: Int = processParameter(queries["needAnimate"] ?? 0) ?? 0
             if let action = shareInstance.customJumpAction {
                 action(jumpType, vc)
             } else {
                 switch jumpType {
                 case .modal:
-                    modal(vc)
+                    modal(vc, needAnimate)
                 case .push:
-                    push(vc)
+                    push(vc, needAnimate)
                 case .popToTaget:
                     popToTargetVC(vcClass: type(of: vc))
                 case .windowNavRoot:
@@ -121,7 +122,9 @@ extension TheRouter {
     
     private class func showTabBar(queries: [String: Any]) {
         let selectIndex: Int = processParameter(queries[TheRouterTabBarSelecIndex] ?? 0) ?? 0
-        let tabVC = UIApplication.shared.delegate?.window??.rootViewController
+        // let tabVC = UIApplication.shared.delegate?.window??.rootViewController
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first 
+		let tabVC = keyWindow?.rootViewController
         if let tabVC = tabVC as? UITabBarController {
             let navVC: UINavigationController? = la_getTopViewController(nil)?.navigationController
             if let navigationController = navVC {
@@ -230,14 +233,14 @@ extension TheRouter {
         }
     }
     
-    public class func push(_ vc: UIViewController) {
+    public class func push(_ vc: UIViewController, _ needAnimate: Int) {
         
         guard let currentVC = getActivityViewController() else {
             return
         }
         if currentVC is UITabBarController {
             vc.hidesBottomBarWhenPushed = true
-            la_getTopViewController(nil)?.navigationController?.pushViewController(vc, animated: true)
+            la_getTopViewController(nil)?.navigationController?.pushViewController(vc, animated: needAnimate == 0)
         } else {
             DispatchQueue.main.async {
                 var navVC: UINavigationController?
@@ -247,12 +250,12 @@ extension TheRouter {
                     navVC = getFirstNavigationControllerContainer(responder: currentVC) as? UINavigationController
                 }
                 vc.hidesBottomBarWhenPushed = true
-                navVC?.pushViewController(vc, animated: true)
+                navVC?.pushViewController(vc, animated: needAnimate == 0)
             }
         }
     }
     
-    public class func modal(_ vc: UIViewController) {
+    public class func modal(_ vc: UIViewController, _ needAnimate: Int) {
         
         guard let currentVC = getActivityViewController() else {
             return
@@ -270,7 +273,7 @@ extension TheRouter {
                 currentVC.presentedViewController?.dismiss(animated: false, completion: nil)
             }
             
-            currentVC.present(vc, animated: true, completion: nil)
+            currentVC.present(vc, animated: needAnimate == 0, completion: nil)
         }
     }
     
