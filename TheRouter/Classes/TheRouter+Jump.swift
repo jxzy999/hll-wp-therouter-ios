@@ -233,7 +233,7 @@ extension TheRouter {
         }
     }
     
-    public class func push(_ vc: UIViewController, _ needAnimate: Int) {
+    public class func push(_ vc: UIViewController, _ needAnimate: Int = 0) {
         
         guard let currentVC = getActivityViewController() else {
             return
@@ -255,7 +255,7 @@ extension TheRouter {
         }
     }
     
-    public class func modal(_ vc: UIViewController, _ needAnimate: Int) {
+    public class func modal(_ vc: UIViewController, _ needAnimate: Int = 0) {
         
         guard let currentVC = getActivityViewController() else {
             return
