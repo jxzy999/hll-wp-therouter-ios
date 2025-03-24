@@ -170,7 +170,12 @@ extension TheRouterManager {
                 guard let currentClass = NSClassFromString(currentClassName) else {
                     continue
                 }
-                
+                guard !currentClassName.contains("TUNI") else {
+                    continue
+                }
+                guard !currentClassName.contains("Thing") else {
+                    continue
+                }
                 if class_getInstanceMethod(currentClass, NSSelectorFromString("methodSignatureForSelector:")) != nil,
                    class_getInstanceMethod(currentClass, NSSelectorFromString("doesNotRecognizeSelector:")) != nil {
                     if let cls =  currentClass as? UIViewController.Type {
@@ -263,7 +268,12 @@ extension TheRouterManager {
                 guard let currentClass = NSClassFromString(currentClassName) else {
                     continue
                 }
-                
+                guard !currentClassName.contains("TUNI") else {
+                    continue
+                }
+                guard !currentClassName.contains("Thing") else {
+                    continue
+                }
                 if class_getInstanceMethod(currentClass, NSSelectorFromString("methodSignatureForSelector:")) != nil,
                    class_getInstanceMethod(currentClass, NSSelectorFromString("doesNotRecognizeSelector:")) != nil  {
                     if let clss = currentClass as? CustomRouterInfo.Type {
@@ -306,6 +316,12 @@ extension TheRouterManager {
             for idx in 0..<classCount.pointee {
                 let currentClassName = String(cString: classNames[Int(idx)])
                 guard let currentClass = NSClassFromString(currentClassName) else {
+                    continue
+                }
+                guard !currentClassName.contains("TUNI") else {
+                    continue
+                }
+                guard !currentClassName.contains("Thing") else {
                     continue
                 }
                 if class_getInstanceMethod(currentClass, NSSelectorFromString("methodSignatureForSelector:")) != nil,
