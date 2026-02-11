@@ -29,7 +29,7 @@ TODO: Add long description of the pod here.
   # exclude_files，防止 Xcode 尝试编译 Package.swift 导致报错  
   s.exclude_files = 'TheRouter/Classes/TheRouterable/Package.swift'
   # preserve_paths，确保文件被下载并保留在磁盘目录中，供编译脚本读取
-  s.preserve_paths = 'TheRouter/Classes/TheRouterable/Package.swift'
+  s.preserve_paths = 'TheRouter/Classes/TheRouterable'
   s.frameworks = 'UIKit', 'Foundation'
   s.ios.deployment_target = '11.0'
   # swift 支持的版本
