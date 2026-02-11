@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TheRouter'
-  s.version          = '1.1.9'
+  s.version          = '1.1.10'
   s.summary          = 'TheRouter一个用于模块间解耦和通信，基于Swift协议进行动态懒加载注册路由与打开路由的工具。同时支持通过Service-Protocol寻找对应的模块，并用 protocol进行依赖注入和模块通信。'
 
 # This description is used to generate tags and improve search results.
@@ -21,12 +21,15 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/HuolalaTech/therouter-ios'
+  s.homepage         = 'https://github.com/jxzy999/therouter-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'mars' => 'mars.yao' }
-  s.source           = { :git => 'https://github.com/HuolalaTech/hll-wp-therouter-ios.git', :tag => s.version.to_s } 
+  s.source           = { :git => 'https://github.com/jxzy999/hll-wp-therouter-ios.git', :tag => s.version.to_s } 
   s.source_files = 'TheRouter/Classes/**/*', 'TheRouter/Classes/TheRouter/Sources/TheRouter/*'
+  # exclude_files，防止 Xcode 尝试编译 Package.swift 导致报错  
   s.exclude_files = 'TheRouter/Classes/TheRouterable/Package.swift'
+  # preserve_paths，确保文件被下载并保留在磁盘目录中，供编译脚本读取
+  s.preserve_paths = 'TheRouter/Classes/TheRouterable/Package.swift'
   s.frameworks = 'UIKit', 'Foundation'
   s.ios.deployment_target = '11.0'
   # swift 支持的版本
